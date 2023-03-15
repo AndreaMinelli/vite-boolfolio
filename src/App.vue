@@ -2,20 +2,25 @@
 const baseProjectsUrl = "http://127.0.0.1:8000/api";
 import axios from "axios";
 import AppHeader from "./components/AppHeader.vue";
+import AppPagination from "./components/AppPagination.vue";
 import ProjectCard from "./components/projects/ProjectCard.vue";
 export default {
   name: "App",
-  components: { AppHeader, ProjectCard },
+  components: { AppHeader, ProjectCard, AppPagination },
   data() {
     return {
-      projects: [],
+      projects: {
+        data: [],
+        links: [],
+      },
     };
   },
   methods: {
     fetchProjects(endpoint = null) {
       if (!endpoint) endpoint = baseProjectsUrl + "/projects";
       axios.get(endpoint).then((res) => {
-        this.projects = res.data;
+        const { data, links } = res.data;
+        this.projects = { data, links };
       });
     },
   },
@@ -29,12 +34,17 @@ export default {
   <app-header></app-header>
   <div class="container">
     <h1 class="my-5">I miei progetti</h1>
-    <ul class="row row-cols-3 list-unstyled g-3">
-      <li class="col" v-for="project in projects" :key="project.id">
+    <ul class="row row-cols-5 list-unstyled g-3">
+      <li class="col" v-for="project in projects.data" :key="project.id">
         <project-card :project="project"></project-card>
       </li>
     </ul>
   </div>
+  <footer class="d-flex justify-content-center my-4">
+    <app-pagination
+      :links="projects.links"
+      @change-page="fetchProjects"></app-pagination>
+  </footer>
 </template>
 
 <style></style>
