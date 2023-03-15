@@ -3,12 +3,14 @@ const baseProjectsUrl = "http://127.0.0.1:8000/api";
 import axios from "axios";
 import AppHeader from "./components/AppHeader.vue";
 import AppPagination from "./components/AppPagination.vue";
+import AppLoader from "./components/AppLoader.vue";
 import ProjectCard from "./components/projects/ProjectCard.vue";
 export default {
   name: "App",
-  components: { AppHeader, ProjectCard, AppPagination },
+  components: { AppHeader, ProjectCard, AppPagination, AppLoader },
   data() {
     return {
+      isLoading: false,
       projects: {
         data: [],
         links: [],
@@ -17,11 +19,18 @@ export default {
   },
   methods: {
     fetchProjects(endpoint = null) {
+      this.isLoading = true;
       if (!endpoint) endpoint = baseProjectsUrl + "/projects";
-      axios.get(endpoint).then((res) => {
-        const { data, links } = res.data;
-        this.projects = { data, links };
-      });
+      axios
+        .get(endpoint)
+        .then((res) => {
+          const { data, links } = res.data;
+          this.projects = { data, links };
+        })
+        .catch()
+        .then(() => {
+          this.isLoading = false;
+        });
     },
   },
   created() {
@@ -32,7 +41,8 @@ export default {
 
 <template>
   <app-header></app-header>
-  <div class="container">
+  <app-loader v-if="isLoading"></app-loader>
+  <div class="container" v-else>
     <h1 class="my-5">I miei progetti</h1>
     <ul class="row row-cols-5 list-unstyled g-3">
       <li class="col" v-for="project in projects.data" :key="project.id">
