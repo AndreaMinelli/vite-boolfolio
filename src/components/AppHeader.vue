@@ -34,3 +34,9 @@ export default {
     </nav>
   </header>
 </template>
+
+<style scoped>
+nav {
+  height: 60px;
+}
+</style>
