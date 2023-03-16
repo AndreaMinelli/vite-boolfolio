@@ -8,7 +8,9 @@ export default {
   <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Portfolio</a>
+        <router-link :to="{ name: 'home' }" class="navbar-brand">
+          Portfolio
+        </router-link>
         <button
           class="navbar-toggler"
           type="button"
@@ -22,9 +24,9 @@ export default {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+              <router-link :to="{ name: 'home' }" class="nav-link">
                 Projects
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>
