@@ -1,11 +1,10 @@
 <script>
 const baseProjectsUrl = "http://127.0.0.1:8000/api";
 import axios from "axios";
-import AppAlert from "../components/AppAlert.vue";
 import AppLoader from "../components/AppLoader.vue";
 export default {
   name: "ProjectDetailsPage",
-  components: { AppLoader, AppAlert },
+  components: { AppLoader },
   data() {
     return {
       alerts: {
@@ -27,18 +26,11 @@ export default {
           this.project = res.data;
         })
         .catch(() => {
-          this.alerts.show = true;
-          this.alerts.type = "danger";
-          this.alerts.message = "Si è verificato un errore nel caricamento.";
+          this.$router.push({ name: "not-found" });
         })
         .then(() => {
           this.isLoading = false;
         });
-    },
-    closeAlert() {
-      this.alerts.show = false;
-      this.alerts.type = "";
-      this.alerts.message = "";
     },
   },
   computed: {
@@ -65,10 +57,6 @@ export default {
 <template>
   <app-loader v-if="isLoading"></app-loader>
   <div class="container" v-else>
-    <app-alert
-      v-if="alerts.show"
-      :alert="alerts"
-      @close-alert="closeAlert"></app-alert>
     <h1 class="my-5 text-capitalize text-center">{{ project.name }}</h1>
     <img
       v-if="project.project_img"
