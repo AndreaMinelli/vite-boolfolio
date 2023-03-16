@@ -18,7 +18,13 @@ export default {
     <div class="card-body">
       <h5 class="card-title text-capitalize mb-3">{{ project.name }}</h5>
       <h6 class="card-subtitle mb-2 text-muted">
-        {{ project.type ? project.type.name : "N.D." }}
+        <router-link
+          class="text-muted text-decoration-none"
+          :to="{ name: 'projects-for-type', params: { id: project.type_id } }"
+          v-if="project.type"
+          >{{ project.type.name }}</router-link
+        >
+        <span v-else>N.D.</span>
       </h6>
       <p class="card-text">
         {{ setDescription }}
