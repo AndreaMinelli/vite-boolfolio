@@ -24,5 +24,12 @@ export default {
         {{ setDescription }}
       </p>
     </div>
+    <div class="card-footer">
+      <router-link
+        class="btn btn-primary btn-sm"
+        :to="{ name: 'project-details', params: { id: project.id } }">
+        Visualizza
+      </router-link>
+    </div>
   </div>
 </template>
