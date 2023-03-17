@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import ProjectDetailsPage from "../pages/ProjectDetailsPage.vue";
 import ProjectsForTypePage from "../pages/ProjectsForTypePage.vue";
+import ContactsPage from "../pages/ContactsPage.vue";
 import NotFoundPage from "../pages/NotFoundPage.vue";
 
 const router = createRouter({
@@ -9,7 +10,7 @@ const router = createRouter({
   linkActiveClass: "active",
   routes: [
     {
-      path: "/projects",
+      path: "/",
       name: "home",
       component: HomePage,
     },
@@ -22,6 +23,11 @@ const router = createRouter({
       path: "/types/:id/projects",
       name: "projects-for-type",
       component: ProjectsForTypePage,
+    },
+    {
+      path: "/contacts",
+      name: "contacts",
+      component: ContactsPage,
     },
     {
       path: "/:pathMatch(.*)*",
